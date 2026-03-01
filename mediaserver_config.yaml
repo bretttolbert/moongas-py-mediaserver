@@ -18,6 +18,25 @@ playbackMethods:
   local:
     enabled: true
     mediaPath: /data/
-  youtube:
+  webSearch:
+  - name: YouTube
     enabled: true
     searchQueryURLFormat: "https://www.youtube.com/results?search_query={artist}+{album}+{title}+official+music+video"
+  - name: YouTube Music
+    enabled: true
+    searchQueryURLFormat: "https://music.youtube.com/search?q={artist}+{album}+{title}"
+  - name: Apple Music
+    enabled: true
+    searchQueryURLFormat: "https://music.apple.com/us/search?term={artist}+{album}+{title}"
+  - name: Amazon Music
+    enabled: true
+    searchQueryURLFormat: "https://music.amazon.com/search/{artist}+{album}+{title}"
+  - name: Spotify
+    enabled: true
+    searchQueryURLFormat: "https://open.spotify.com/search/{artist}+{album}+{title}"
+  - name: Tidal
+    enabled: true
+    searchQueryURLFormat: "https://tidal.com/search?q={artist}+{album}+{title}"
+  - name: Deezer
+    enabled: true
+    searchQueryURLFormat: "https://deezer.com/search/{artist}+{album}+{title}"

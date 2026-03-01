@@ -16,15 +16,21 @@
     <script src="{{ url_for('static', filename='hints_stub.js') }}"></script>
     {% endif %}
     <script>
-    let PLAYBACK_METHOD_LOCAL_ENABLED = ("{{ PLAYBACK_METHOD_LOCAL_ENABLED }}" == "True");
-    let PLAYBACK_METHOD_YOUTUBE_ENABLED = ("{{ PLAYBACK_METHOD_YOUTUBE_ENABLED }}" == "True");
-    let SEARCH_QUERY_URL_FORMAT = "{{ SEARCH_QUERY_URL_FORMAT }}";
+    const PLAYBACK_METHOD_LOCAL_ENABLED = ("{{ playback_method_local_enabled }}" == "True");
+    //the parameters ending in "_csv" are my rather kludgy solution
+    //for converting a list of Python objects to a JavaScript string dictionary
+    //(I know I can use | tojson but it confuses the hell out of VSCode)
+    var searchQueryUrlFormats = {};
+    var keys = String("{{ web_search_playback_methods_csv }}").split(",");
+    var values = String("{{ web_search_query_url_formats_csv }}").split(",");
+    for (var i=0; i<keys.length; ++i) {
+        searchQueryUrlFormats[keys[i]] = values[i];
+    }
 
     $(function() {
-        // analogous to python function format_search_query_url
-        // (can't use url_for here because this is an external (youtube.com) URL)
-        var formatSearchQueryURL = function(artist, album, title) {
-            var ret = SEARCH_QUERY_URL_FORMAT;
+        // (can't use url_for here because this is an external (e.g. youtube.com) URL)
+        var formatSearchQueryURL = function(search_query_url_format, artist, album, title) {
+            var ret = search_query_url_format;
             ret = ret.replace("{artist}", encodeURIComponent(artist));
             ret = ret.replace("{album}", encodeURIComponent(album));
             ret = ret.replace("{title}", encodeURIComponent(title));
@@ -129,9 +135,9 @@
                     $("#audioElem").prop("src", media_file_path);
                     $("#playLocalMediaLink").prop("href", Flask.url_for("main.player", {artist: track.artist, album: track.album, title: track.title}));
                 }
-                if (PLAYBACK_METHOD_YOUTUBE_ENABLED) {
-                    $("#searchYouTubeLink").prop("href", formatSearchQueryURL(track.artist, track.album, track.title));
-                }
+                Object.keys(searchQueryUrlFormats).forEach(key => {
+                    $(`#webSearch${key.replace(' ', '')}Link`).prop("href", formatSearchQueryURL(searchQueryUrlFormats[key], track.artist, track.album, track.title));
+                });
 		        loadTrackHints(track);
             })
             .fail(function(error) {
@@ -193,18 +199,6 @@
         </div>
         <div id="trackList">
             <table class="playback-options">
-                <tr><th>Playback Options:</th>
-                    <td>
-                        <table class="no-border">
-                            {% if PLAYBACK_METHOD_LOCAL_ENABLED %}
-                            <tr class="no-border"><td><a id="playLocalMediaLink" href="#">▶ Local Media</a></td></tr>
-                            {% endif %}
-                            {% if PLAYBACK_METHOD_YOUTUBE_ENABLED %}
-                            <tr class="no-border"><td><a id="searchYouTubeLink" href="#" target="_blank" rel="noopener noreferrer">🔍 YouTube</a></td></tr>
-                            {% endif %}
-                        </table>
-                    </td>
-                </tr>
                 <tr><th>Title:</th><td><a id="linkTitle" href="#">TITLE</a></td></tr>
                 <tr><th>Artist:</th><td><a id="linkArtist" href="#" target="_blank" rel="noopener noreferrer">ARTIST</a></td></tr>
                 <tr><th>Album:</th><td><a id="linkAlbum" href="#" target="_blank" rel="noopener noreferrer">ALBUM</a> </td></tr>
@@ -214,6 +208,14 @@
                 <tr><th>Region:</th><td><a id="linkRegion" href="#" target="_blank" rel="noopener noreferrer">REGION</a> </td></tr>
                 <tr><th>City:</th><td><a id="linkCity" href="#" target="_blank" rel="noopener noreferrer">CITY</a> </td></tr>
                 <tr><th>Language:</th><td><a id="linkLanguage" href="#" target="_blank" rel="noopener noreferrer">LANGUAGE</a> </td></tr>
+                <tr><th>Playback Options:</th><td></td></tr>
+                {% if PLAYBACK_METHOD_LOCAL_ENABLED %}
+                <tr><th></th><td><a id="playLocalMediaLink" href="#">▶ Local Media</a></td></tr>
+                {% endif %}
+                {% for method in WEB_SEARCH_PLAYBACK_METHODS %}
+                {# E.g. for web search playback method "Amazon Music" the link id is "webSearchAmazonMusicLink" #}
+                <tr><th></th><td><a id="webSearch{{ method.name | replace(' ', '') }}Link" href="#" target="_blank" rel="noopener noreferrer">🔍 {{ method.name }}</a></td></tr>
+                {%  endfor %}
             </table>
         </div>
 

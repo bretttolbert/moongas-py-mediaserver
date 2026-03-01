@@ -78,11 +78,19 @@ from app.types.arg_types import (
 
 @bp.route("/player")
 def player() -> str:
+    config = get_config(current_app)
+    web_search_playback_methods = [m for m in config.playback_methods.webSearch if m.enabled]
     kwargs = {}
     args: ArgsDict = get_request_args(request)
     for k, v in args.items():
         kwargs[k] = v
-    return render_template("player.html", **kwargs)
+    return render_template(
+        "player.html",
+        playback_method_local_enabled=config.playback_methods.local.enabled,
+        web_search_playback_methods_csv=",".join(m.name for m in web_search_playback_methods),
+        web_search_query_url_formats_csv=",".join(m.search_query_url_format for m in web_search_playback_methods),
+        **kwargs
+    )
 
 
 @bp.route("/player/index")

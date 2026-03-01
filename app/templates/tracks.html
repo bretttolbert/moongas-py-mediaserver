@@ -37,26 +37,6 @@
                     <td><a href="{{ url_for('main.tracks', artist=file.artist, album=file.album) }}">{{ file.album }}</a></td>
                     <td><a href="{{ url_for('main.albums', year=file.year) }}">{{ file.year }}</a></td>
                     <td><a href="{{ url_for('main.artists', genre=file.genre) }}">{{ file.genre }}</a></td>
-                    <!--
-                    <td>
-                        <table class="no-border">
-                            
-                            {% if PLAYBACK_METHOD_LOCAL_ENABLED %}
-                            <tr class="no-border"><td>
-                                <a href="{{ url_for('main.player', artist=file.artist, album=file.album, title=file.title) }}">▶ Local Media</a>
-                            </td></tr>
-                            {% endif %}
-
-                            {% if PLAYBACK_METHOD_YOUTUBE_ENABLED %}
-                            {% set args = { 'artist': file.artist, 'album': file.album, 'title': file.title } %}
-                            <tr class="no-border"><td>
-                                <a href="{{ args | format_search_query_url }}" href="#" target="_blank" rel="noopener noreferrer">🔍 YouTube</a>
-                            </td></tr>
-                            {% endif %}
-
-                        </table>
-                    </td>
-                    -->
                 </tr>
                 {% endfor %}
             </table>

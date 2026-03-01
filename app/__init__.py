@@ -14,17 +14,6 @@ from mediascan import load_files_yaml, load_artists_yaml
 from app.types.config.mediaserver_config import MediaServerConfig
 
 
-def format_search_query_url(args: Dict[str, str], config: MediaServerConfig):
-    artist = quote_plus(args["artist"])
-    album = quote_plus(args["album"])
-    title = quote_plus(args["title"])
-    ret = config.playback_methods.youtube.search_query_url_format
-    ret = ret.replace("{artist}", artist)
-    ret = ret.replace("{album}", album)
-    ret = ret.replace("{title}", title)
-    return ret
-
-
 def format_results_string(l: Iterable, max_results: int):
     L = len(list(l))
     return f"{L:,}{'+' if L >= max_results else ''} {'result' if L == 1 else 'results'}"
@@ -37,7 +26,6 @@ def register_filters(app: Flask, config: MediaServerConfig):
     )
     app.jinja_env.filters["quote_plus"] = lambda u: quote_plus(u)
     app.jinja_env.filters["make_list"] = lambda s: list(s)
-    app.jinja_env.filters["format_search_query_url"] = lambda args: format_search_query_url(args, config)
 
 
 def set_globals(
@@ -47,9 +35,10 @@ def set_globals(
     app.jinja_env.globals["PRESENT_YEAR"] = datetime.now().year
     app.jinja_env.globals["PLAYBACK_METHOD_LOCAL_ENABLED"] = config.playback_methods.local.enabled
 
-    app.jinja_env.globals["PLAYBACK_METHOD_YOUTUBE_ENABLED"] = config.playback_methods.youtube.enabled
-
-    app.jinja_env.globals["SEARCH_QUERY_URL_FORMAT"] = config.playback_methods.youtube.search_query_url_format
+    app.jinja_env.globals["WEB_SEARCH_PLAYBACK_METHODS"] = []
+    for method in config.playback_methods.webSearch:
+        if method.enabled:
+            app.jinja_env.globals["WEB_SEARCH_PLAYBACK_METHODS"].append(method)
 
     app.jinja_env.globals["AGE_VERIFICATION"] = config.age_verification
 
