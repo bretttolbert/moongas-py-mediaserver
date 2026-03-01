@@ -21,22 +21,22 @@ playbackMethods:
   webSearch:
   - name: YouTube
     enabled: true
-    searchQueryURLFormat: "https://www.youtube.com/results?search_query={artist}+{album}+{title}+official+music+video"
+    searchQueryURLFormat: "https://www.youtube.com/results?search_query={artist}%20{album}%20{title}%20official%20music%20video"
   - name: YouTube Music
     enabled: true
-    searchQueryURLFormat: "https://music.youtube.com/search?q={artist}+{album}+{title}"
+    searchQueryURLFormat: "https://music.youtube.com/search?q={artist}%20{album}%20{title}"
   - name: Apple Music
     enabled: true
-    searchQueryURLFormat: "https://music.apple.com/us/search?term={artist}+{album}+{title}"
+    searchQueryURLFormat: "https://music.apple.com/us/search?term={artist}%20{album}%20{title}"
   - name: Amazon Music
     enabled: true
-    searchQueryURLFormat: "https://music.amazon.com/search/{artist}+{album}+{title}"
+    searchQueryURLFormat: "https://music.amazon.com/search/{artist}%20{album}%20{title}"
   - name: Spotify
     enabled: true
-    searchQueryURLFormat: "https://open.spotify.com/search/{artist}+{album}+{title}"
+    searchQueryURLFormat: "https://open.spotify.com/search/results/{artist}%20{album}%20{title}"
   - name: Tidal
     enabled: true
-    searchQueryURLFormat: "https://tidal.com/search?q={artist}+{album}+{title}"
+    searchQueryURLFormat: "https://tidal.com/search?q={artist}%20{album}%20{title}"
   - name: Deezer
     enabled: true
-    searchQueryURLFormat: "https://deezer.com/search/{artist}+{album}+{title}"
+    searchQueryURLFormat: "https://deezer.com/search/{artist}%20{album}%20{title}"
