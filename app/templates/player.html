@@ -132,10 +132,15 @@
                 if (PLAYBACK_METHOD_YOUTUBE_ENABLED) {
                     $("#searchYouTubeLink").prop("href", formatSearchQueryURL(track.artist, track.album, track.title));
                 }
-		loadTrackHints(track);
+		        loadTrackHints(track);
             })
-            .fail(function() { alert("error: failed to load track(s)"); });
+            .fail(function(error) {
+                var errmsg = `Failed to load track(s).\nError: ${JSON.stringify(error)}\nrequestParams: ${JSON.stringify(requestParams)}`;
+                alert(errmsg);
+                console.error(errmsg);
+            });
         }
+
         $('#nextBtn').click(function() {
             loadTrack();
             if (PLAYBACK_METHOD_LOCAL_ENABLED) {
@@ -157,7 +162,7 @@
     {% include 'header_without_years.html' %}
     <main>
         <div id="cover">
-            <a id="linkCover" href="#">
+            <a id="linkCover" href="#" target="_blank" rel="noopener noreferrer">
                 <img src="#" id="coverImg" class="cover-img single-img" width="1000" height="1000" />
             </a>
         </div>
@@ -201,14 +206,14 @@
                     </td>
                 </tr>
                 <tr><th>Title:</th><td><a id="linkTitle" href="#">TITLE</a></td></tr>
-                <tr><th>Artist:</th><td><a id="linkArtist" href="#">ARTIST</a></td></tr>
-                <tr><th>Album:</th><td><a id="linkAlbum" href="#">ALBUM</a> </td></tr>
-                <tr><th>Genre:</th><td><a id="linkGenre" href="#">GENRE</a></td></tr>
-                <tr><th>Year:</th><td><a id="linkYear" href="#">YEAR</a> </td></tr>
-                <tr><th>Country:</th><td><a id="linkCountry" href="#">COUNTRY</a> </td></tr>
-                <tr><th>Region:</th><td><a id="linkRegion" href="#">REGION</a> </td></tr>
-                <tr><th>City:</th><td><a id="linkCity" href="#">CITY</a> </td></tr>
-                <tr><th>Language:</th><td><a id="linkLanguage" href="#">LANGUAGE</a> </td></tr>
+                <tr><th>Artist:</th><td><a id="linkArtist" href="#" target="_blank" rel="noopener noreferrer">ARTIST</a></td></tr>
+                <tr><th>Album:</th><td><a id="linkAlbum" href="#" target="_blank" rel="noopener noreferrer">ALBUM</a> </td></tr>
+                <tr><th>Genre:</th><td><a id="linkGenre" href="#" target="_blank" rel="noopener noreferrer">GENRE</a></td></tr>
+                <tr><th>Year:</th><td><a id="linkYear" href="#" target="_blank" rel="noopener noreferrer">YEAR</a> </td></tr>
+                <tr><th>Country:</th><td><a id="linkCountry" href="#" target="_blank" rel="noopener noreferrer">COUNTRY</a> </td></tr>
+                <tr><th>Region:</th><td><a id="linkRegion" href="#" target="_blank" rel="noopener noreferrer">REGION</a> </td></tr>
+                <tr><th>City:</th><td><a id="linkCity" href="#" target="_blank" rel="noopener noreferrer">CITY</a> </td></tr>
+                <tr><th>Language:</th><td><a id="linkLanguage" href="#" target="_blank" rel="noopener noreferrer">LANGUAGE</a> </td></tr>
             </table>
         </div>
 
