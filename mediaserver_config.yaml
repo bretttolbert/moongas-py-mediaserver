@@ -36,7 +36,7 @@ playbackMethods:
     searchQueryURLFormat: "https://play.spotify.com/search/{artist}%20{album}%20{title}"
   - name: Spotify Mobile App
     enabled: true
-    searchQueryURLFormat: "spotify:search/{artist}%20{album}%20{title}"
+    searchQueryURLFormat: "spotify:/search/{artist}%20{album}%20{title}"
   - name: Tidal
     enabled: true
     searchQueryURLFormat: "https://tidal.com/search?q={artist}%20{album}%20{title}"
