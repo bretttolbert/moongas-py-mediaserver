@@ -31,9 +31,9 @@
         // (can't use url_for here because this is an external (e.g. youtube.com) URL)
         var formatSearchQueryURL = function(search_query_url_format, artist, album, title) {
             var ret = search_query_url_format;
-            ret = ret.replace("{artist}", encodeURIComponent(artist));
-            ret = ret.replace("{album}", encodeURIComponent(album));
-            ret = ret.replace("{title}", encodeURIComponent(title));
+            ret = ret.replaceAll("{artist}", encodeURIComponent(artist));
+            ret = ret.replaceAll("{album}", encodeURIComponent(album));
+            ret = ret.replaceAll("{title}", encodeURIComponent(title));
             return ret;
         }
 
@@ -139,7 +139,9 @@
                 Object.keys(searchQueryUrlFormats).forEach(key => {
                     var url = formatSearchQueryURL(searchQueryUrlFormats[key], track.artist, track.album, track.title);
                     console.log(`url: ${url}`);
-                    document.getElementById(`webSearch${key.replace(' ', '')}Link`).setAttribute(
+                    var id = `webSearch${key.replaceAll(' ', '')}Link`;
+                    console.log(`id: ${id}`);
+                    document.getElementById(id).setAttribute(
                         "href", url);
                 });
 		        loadTrackHints(track);
