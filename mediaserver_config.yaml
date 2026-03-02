@@ -33,7 +33,7 @@ playbackMethods:
     searchQueryURLFormat: "https://music.amazon.com/search/{artist}%20{album}%20{title}"
   - name: Spotify
     enabled: true
-    searchQueryURLFormat: "https://open.spotify.com/search/results/{artist}%20{album}%20{title}"
+    searchQueryURLFormat: "https://play.spotify.com/search/{artist}%20{album}%20{title}"
   - name: Tidal
     enabled: true
     searchQueryURLFormat: "https://tidal.com/search?q={artist}%20{album}%20{title}"
