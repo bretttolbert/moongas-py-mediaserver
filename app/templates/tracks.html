@@ -29,14 +29,14 @@
         {% endif %}
         <div id="trackList">
             <table class="w-100">
-                <tr><th>Title</th><th>Artist</th><th>Album</th><th>Year</th><th>Genre</th><!--<th>Playback Options</th>--></tr>
+                <tr><th>Year</th><th>Genre</th><th>Artist</th><th>Album</th><th>Title</th></tr>
                 {% for file in files %}
                 <tr>
-                    <td><a href="{{ url_for('main.player', title=file.title, artist=file.artist, album=file.album) }}">{{ file.title }}</a></td>
-                    <td><a href="{{ url_for('main.albums', artist=file.artist) }}">{{ file.artist }}</a></td>
-                    <td><a href="{{ url_for('main.tracks', artist=file.artist, album=file.album) }}">{{ file.album }}</a></td>
                     <td><a href="{{ url_for('main.albums', year=file.year) }}">{{ file.year }}</a></td>
                     <td><a href="{{ url_for('main.artists', genre=file.genre) }}">{{ file.genre }}</a></td>
+                    <td><a href="{{ url_for('main.albums', artist=file.artist) }}">{{ file.artist }}</a></td>
+                    <td><a href="{{ url_for('main.tracks', artist=file.artist, album=file.album) }}">{{ file.album }}</a></td>
+                    <td><a href="{{ url_for('main.player', title=file.title, artist=file.artist, album=file.album) }}">{{ file.title }}</a></td>
                 </tr>
                 {% endfor %}
             </table>

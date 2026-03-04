@@ -19,6 +19,9 @@ playbackMethods:
     enabled: true
     mediaPath: /data/
   webSearch:
+  - name: Google
+    enabled: true
+    searchQueryURLFormat: "https://google.com/search?q={artist}%20{album}%20{title}"
   - name: YouTube
     enabled: true
     searchQueryURLFormat: "https://www.youtube.com/results?search_query={artist}%20{album}%20{title}%20official%20music%20video"
@@ -36,10 +39,13 @@ playbackMethods:
     searchQueryURLFormat: "https://play.spotify.com/search/{artist}%20{album}%20{title}"
   - name: Spotify Mobile App
     enabled: true
-    searchQueryURLFormat: "spotify:/search/{artist}%20{album}%20{title}"
-  - name: Tidal
+    searchQueryURLFormat: "https://google.com/search?q=Spotify:search/{artist}%20{album}%20{title}"
+  - name: Tidal Desktop
     enabled: true
     searchQueryURLFormat: "https://tidal.com/search?q={artist}%20{album}%20{title}"
+  - name: Tidal Mobile App
+    enabled: true
+    searchQueryURLFormat: "https://google.com/search?q=Tidal:search/{artist}%20{album}%20{title}"
   - name: Deezer
     enabled: true
     searchQueryURLFormat: "https://deezer.com/search/{artist}%20{album}%20{title}"
