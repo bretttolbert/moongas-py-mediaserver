@@ -40,7 +40,8 @@
         if (PLAYBACK_METHOD_LOCAL_ENABLED)
         {
             $("#audioElem")[0].addEventListener('ended', function() {
-                //The repeat feature doesn't seem very useful (who wants to listen to the same song over and over??)
+                //The repeat feature doesn't seem very useful 
+                // (who wants to listen to the same song over and over?)
                 //So make continuous shuffle the default (and only) behavior.
                 /*
                 var repeat = $("#repeatChk").prop('checked');
@@ -111,33 +112,51 @@
                 console.log(track);
                 $("#coverImg").prop("src", Flask.url_for("main.getfile", {path: track.cover_path}));
                 $("#linkAlbum").html(track.album);
-                $("#linkAlbum").prop("href", Flask.url_for("main.tracks", {artist: track.artist, album: track.album}));
+                $("#linkAlbum").prop("href", Flask.url_for("main.tracks", {
+                    artist: encodeURIComponent(track.artist), 
+                    album: encodeURIComponent(track.album)}));
                 $("#linkArtist").html(track.artist);
-                $("#linkArtist").prop("href", Flask.url_for("main.albums", {artist: track.artist}));
+                $("#linkArtist").prop("href", Flask.url_for("main.albums", {
+                    artist: encodeURIComponent(track.artist)}));
                 $("#linkCity").html(track.city);
-                $("#linkCity").prop("href", Flask.url_for("main.artists", {city: track.city, countryCode: track.countryCode}));
+                $("#linkCity").prop("href", Flask.url_for("main.artists", {
+                    city: track.city, countryCode: track.countryCode}));
                 $("#linkLanguage").html(track.languageCode);
-                $("#linkLanguage").prop("href", Flask.url_for("main.artists", {languageCode: track.languageCode}));
+                $("#linkLanguage").prop("href", Flask.url_for("main.artists", {
+                    languageCode: track.languageCode}));
                 $("#linkCountry").html(track.countryCode);
-                $("#linkCountry").prop("href", Flask.url_for("main.artists", {countryCode: track.countryCode}));
-                $("#linkCover").prop("href", Flask.url_for("main.tracks", {artist: track.artist, album: track.album}));
+                $("#linkCountry").prop("href", Flask.url_for("main.artists", {
+                    countryCode: track.countryCode}));
+                $("#linkCover").prop("href", Flask.url_for("main.tracks", {
+                    artist: encodeURIComponent(track.artist), 
+                    album: encodeURIComponent(track.album)}));
                 $("#linkGenre").html(track.genre);
-                $("#linkGenre").prop("href", Flask.url_for("main.genre", {genre: track.genre}));
+                $("#linkGenre").prop("href", Flask.url_for("main.genre", {
+                    genre: encodeURIComponent(track.genre)}));
                 $("#linkRegion").html(track.regionCode);
-                $("#linkRegion").prop("href", Flask.url_for("main.artists", {regionCode: track.regionCode}));
+                $("#linkRegion").prop("href", Flask.url_for("main.artists", {
+                    regionCode: track.regionCode}));
                 $("#linkTitle").html(track.title);
                 $("#linkYear").html(track.year);
-                $("#linkYear").prop("href", Flask.url_for("main.albums", {year: track.year}));
+                $("#linkYear").prop("href", Flask.url_for("main.albums", {
+                    year: track.year}));
 
                 if (PLAYBACK_METHOD_LOCAL_ENABLED) {
-                    let media_file_path = Flask.url_for("main.getfile", {path: track.path});
+                    let media_file_path = Flask.url_for("main.getfile", {
+                        path: track.path});
                     console.log("media_file_path: " + media_file_path);
                     $("#audioElem").prop("src", media_file_path);
                     document.getElementById("playLocalMediaLink").setAttribute(
-                        "href", Flask.url_for("main.player", {artist: track.artist, album: track.album, title: track.title}));
+                        "href", Flask.url_for("main.player", {
+                            artist: encodeURIComponent(track.artist), 
+                            album: encodeURIComponent(track.album), 
+                            title: encodeURIComponent(track.title)}));
                 }
                 Object.keys(searchQueryUrlFormats).forEach(key => {
-                    var url = formatSearchQueryURL(searchQueryUrlFormats[key], track.artist, track.album, track.title);
+                    var url = formatSearchQueryURL(searchQueryUrlFormats[key], 
+                    track.artist, 
+                    track.album, 
+                    track.title);
                     console.log(`url: ${url}`);
                     var id = `webSearch${key.replaceAll(' ', '')}Link`;
                     console.log(`id: ${id}`);
@@ -147,7 +166,9 @@
 		        loadTrackHints(track);
             })
             .fail(function(error) {
-                var errmsg = `Failed to load track(s).\nError: ${JSON.stringify(error)}\nrequestParams: ${JSON.stringify(requestParams)}`;
+                var errmsg = `Failed to load track(s).\n` + 
+                `Error: ${JSON.stringify(error)}\n` + 
+                `requestParams: ${JSON.stringify(requestParams)}`;
                 alert(errmsg);
                 console.error(errmsg);
             });
