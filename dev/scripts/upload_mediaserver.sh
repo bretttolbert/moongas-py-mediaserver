@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -euo pipefail
 HOST=$MEDIASERVER_DROPLET_IP
 DEST_USER=root
 DEST_ROOT=/var/www/mediax

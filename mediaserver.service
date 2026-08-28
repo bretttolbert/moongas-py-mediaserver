@@ -1,5 +1,5 @@
 [Unit]
-Description=MediaServer
+Description=mediaserver
 After=network.target
 
 [Service]

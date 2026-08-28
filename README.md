@@ -130,9 +130,10 @@ python run.py mediaserver_config.yaml
     1. `systemctl daemon-reload`
 - Start the mediaservice service and use journalctl to verify that it is running
     1. `systemctl start mediaserver.service`
-    2. `journalctl -u mediaserver.service`
+    2. `systemctl status mediaserver`
 
 Once you have it set up to run as a service, re-scanning your library is as easy as this:
+TODO: Update below to update mediascan database
 ```bash
 cd ~/Git/mediascan
 go run mediascan/src/mediascan.go conf/conf.yaml out/files.yaml

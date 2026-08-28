@@ -31,5 +31,8 @@
         "**/.git": true,
         "**/build": true
     },
-    "python-envs.pythonProjects": []
+    "python-envs.pythonProjects": [],
+    "cSpell.words": [
+        "mediascan"
+    ]
 }

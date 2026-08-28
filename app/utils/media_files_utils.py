@@ -53,7 +53,6 @@ from app.types.album_info import AlbumInfo
 from app.utils.string_utils import str_in_list_ignore_case
 from app.utils.app_utils import get_config
 
-
 NameAndUrl = Tuple[str, str]
 ArtistGeoCounts = Dict[NameAndUrl, int]
 
@@ -496,7 +495,7 @@ def get_artists(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: Ar
         # (faster but depends on presence of artist.yaml files)
         ret: Set[str] = set()
         artists_filtered = filter_artists(app, artists, args)
-        for a in artists_filtered.itertuples(name="Artist", index=False):
+        for a in artists_filtered.itertuples(name="artist", index=False):
             ret.add(str(a.name))
         return sorted(ret)
 
@@ -506,7 +505,7 @@ def get_artist(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: Arg
     Similar to get_artists but only gets a single artists and displays links (album, tracks, shuffle)
     """
     artists_filtered = filter_artists(app, artists, args)
-    artist = next(artists_filtered.itertuples(name="Artist", index=False))
+    artist = next(artists_filtered.itertuples(name="artist", index=False))
     return artist
 
 
