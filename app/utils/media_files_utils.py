@@ -1,7 +1,7 @@
 import json
 import os
 import random
-from typing import cast, Dict, List, Set, Tuple
+from typing import cast, Any, Dict, List, Optional, Set, Tuple
 from urllib.parse import quote_plus  # type: ignore
 from pathlib import Path
 import pandas as pd
@@ -500,13 +500,14 @@ def get_artists(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: Ar
         return sorted(ret)
 
 
-def get_artist(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: ArgsDict):
+def get_artist(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: ArgsDict) -> tuple[Any, ...] | None:
     """
     Similar to get_artists but only gets a single artists and displays links (album, tracks, shuffle)
     """
     artists_filtered = filter_artists(app, artists, args)
-    artist = next(artists_filtered.itertuples(name="artist", index=False))
-    return artist
+    if not artists_filtered.empty:
+        return next(artists_filtered.itertuples(name="artist", index=False))
+    return None
 
 
 def get_word_cloud_data_genres(files: pd.DataFrame) -> List[Dict[str, str]]:

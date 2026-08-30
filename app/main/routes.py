@@ -201,15 +201,18 @@ def artists() -> str:
 
 @bp.route("/artist")
 def artist() -> str:
-    return render_template(
-        "artist.html",
-        artist=get_artist(
-            current_app,
-            get_mediascan_db_files_artists_joined(current_app),
-            get_mediascan_db_artists(current_app),
-            get_request_args(request),
-        ),
+    request_args = get_request_args(request)
+    artist = get_artist(
+        current_app,
+        get_mediascan_db_files_artists_joined(current_app),
+        get_mediascan_db_artists(current_app),
+        request_args,
     )
+    if artist:
+        return render_template("artist.html", artist=artist)
+    else:
+        current_app.logger.error("Artist not found for request arguments: %s", request_args)
+        abort(404)
 
 
 @bp.route("/artist-countries")
