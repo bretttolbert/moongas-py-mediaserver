@@ -1,8 +1,9 @@
 # moongas-py-mediaserver
 
-Flask web application server for browsing medialibrary files, with advanced search filtering. A component of the Moongas ecosystem of media library software.
+Flask web application server for browsing and playing media library files, with advanced search filtering.
 
-A minimalist Flask web application for browsing and playing music files
+- A component of the `moongas` ecosystem of media library tools.
+- A minimalist Flask web application for browsing and playing music files
 
 Uses related projects [moongas-go-mediascan](https://github.com/bretttolbert/moongas-go-mediascan) and [moongas-py-mediascan](https://github.com/bretttolbert/moongas-py-mediascan) for scanning music library files to an sqlite database and then loading the database, respectively.
 
@@ -26,7 +27,8 @@ Uses related projects [moongas-go-mediascan](https://github.com/bretttolbert/moo
 
 ## Features
 
-- Simple minimalist web interface, perfect for a party jukebox hosted on your home WiFi network
+- Simple minimalist web interface
+- Perfect for a party jukebox hosted on your home WiFi network
 - Multiple playback options (configurable):
     1. Play local media files in the browser (using HTML5 `<audio>` tag)
     2. "Play" by opening YouTube search for _"(artist) (album) (title) video"_ (configurable)
