@@ -12,7 +12,7 @@
             "program": "run.py",
             "cwd": "${workspaceFolder}",
             "args": [
-                "mediaserver_config.yaml",
+                "mediaserver-config.yaml",
             ],
             "justMyCode": true,
             "jinja": true,

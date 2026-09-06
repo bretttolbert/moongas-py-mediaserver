@@ -24,6 +24,8 @@
                 <tr><td><a href="{{ url_for('main.artists', sort='count', countryCode='FR') }}">France</a></td></tr>
                 <tr><td><a href="{{ url_for('main.artists', sort='count', countryCode='AU') }}">Australia</a></td></tr>
                 <tr><td><a href="{{ url_for('main.artists', sort='count', countryCode='DE') }}">Germany</a></td></tr>
+                <tr><td><a href="{{ url_for('main.artists', sort='count', countryCode=['AL', 'AD', 'AM', 'AT', 'AZ', 'BY', 'BE', 'BA', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'GE', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'KZ', 'XK', 'LV', 'LI', 'LT', 'LU', 'MT', 'MD', 'MC', 'ME', 'NL', 'MK', 'NO', 'PL', 'PT', 'RO', 'RU', 'SM', 'RS', 'SK', 'SI', 'ES', 'SE', 'CH', 'TR', 'UA', 'GB', 'VA', 'AX', 'FO', 'GI', 'GG', 'IM', 'JE', 'SJ']) }}">Europe</a></td></tr>
+                <tr><td><a href="{{ url_for('main.artists', sort='count', countryCode=['AO', 'BF', 'BI', 'BJ', 'BW', 'CD', 'CF', 'CG', 'CI', 'CM', 'CV', 'DJ', 'DZ', 'EG', 'ER', 'ET', 'GA', 'GH', 'GM', 'GN', 'GQ', 'GW', 'KE', 'KM', 'LR', 'LS', 'LY', 'MA', 'MG', 'ML', 'MR', 'MU', 'MW', 'MZ', 'NA', 'NE', 'NG', 'RW', 'SC', 'SD', 'SL', 'SN', 'SO', 'SS', 'ST', 'SZ', 'TD', 'TG', 'TN', 'TZ', 'UG', 'ZA', 'ZM', 'ZW']) }}">Africa</a></td></tr>
                 <tr><td><a href="{{ url_for('main.artist_country_codes') }}">[View All Countries]</a></td></tr>
                 <tr><td><a href="/assets/projects/mapgraph/mapgraph.php?map=world&mode=graph&dataset=mediaserver-artist-country-counts&dataitem=ARTIST.COUNT">[View Interactive Map (World of Music)]</a></td></tr>
             </table>

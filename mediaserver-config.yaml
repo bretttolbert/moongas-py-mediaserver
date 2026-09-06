@@ -1,5 +1,5 @@
 version: 1
-mediascanDatabaseFilePath: sqlite:///../mediascan/out/mediascan.db
+mediascanDatabaseFilePath: sqlite:///../mediascan.db
 albumCoversPath: /var/www/html/Covers/
 ageVerification: true
 limitBandwidth: true
@@ -11,7 +11,7 @@ flaskConfig:
   debug: true
   useDebugger: false
   useReloader: false
-  rootPath: /home/brett/Git/bretttolbert/mediax/mediaserver/app
+  rootPath: /home/brett/Git/bretttolbert/moongas/moongas-py-mediaserver/app
   staticUrlPath: /mediaserver/static
   urlPrefix: /mediaserver
 playbackMethods:

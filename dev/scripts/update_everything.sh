@@ -1,8 +1,8 @@
 #!/bin/bash
 set -euo pipefail
-./update-files-yaml
-./update-artists-yaml
-./update-mediascandb
+./run-mediascan-scanfilesyaml
+./run-mediascan-scanartistsyaml
+./run-mediascan-scantodb
 ./upload-mediascandb
 ./update-covers
 ./restart-remote-mediaserver

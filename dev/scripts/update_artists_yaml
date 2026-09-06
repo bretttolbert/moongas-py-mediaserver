@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cd mediascan
-go run cmd/scanartistsyaml/main.go conf/conf.yaml out/artists.yaml
-cd ..

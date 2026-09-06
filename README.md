@@ -1,4 +1,5 @@
-# mediaserver
+# moongas-py-mediaserver
+Moongas Flask web application server for browsing medialibrary files, with advanced search filtering
 
 A minimalist Flask web application for browsing and playing music files
 
@@ -106,11 +107,11 @@ git clone git@github.com:bretttolbert/mediaserver.git
 cd mediaserver
 python -m pip install -r requirements.txt
 ```
-- Configure `mediaPath`, etc. in the [`mediaserver_config.yaml`](./mediaserver_config.yaml)
+- Configure `mediaPath`, etc. in the [`mediaserver-config.yaml`](./mediaserver-config.yaml)
 - Run mediaserver
 ```bash
 cd ~/Git/mediaserver
-python run.py mediaserver_config.yaml
+python run.py mediaserver-config.yaml
 ```
 
 #### Automatically start and run as a SystemD service
