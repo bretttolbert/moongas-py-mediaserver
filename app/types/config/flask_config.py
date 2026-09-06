@@ -1,7 +1,7 @@
 from typing import Optional
 
 from dataclasses import dataclass, field
-from dataclass_wizard import YAMLWizard
+from dataclass_wizard.v0 import YAMLWizard
 
 
 @dataclass

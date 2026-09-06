@@ -12,8 +12,6 @@ from flask import (
     Response,
 )
 
-# from mediascan import MediaFile
-
 from app.main import bp
 from app.types.arg_types import args_dict_to_str
 from app.utils.request_args_utils import get_request_args

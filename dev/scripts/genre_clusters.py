@@ -1,7 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 
-from mediascan import Genre
+from mediascan.genres import Genre
 
 """
 Note: I used this script to generate some of the genre cluster links

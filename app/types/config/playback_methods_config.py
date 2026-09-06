@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from dataclass_wizard import YAMLWizard
+from dataclass_wizard.v0 import YAMLWizard
 from typing import List
 
 from app.types.config.local_playback_method_config import LocalPlaybackMethodConfig

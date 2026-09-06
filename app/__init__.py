@@ -9,7 +9,8 @@ import pandas as pd
 from sqlalchemy import create_engine, text, Connection
 import sys
 
-from mediascan import load_files_yaml, load_artists_yaml
+from mediascan.mediafiles_loader import load_files_yaml
+from mediascan.artists_loader import load_artists_yaml
 
 from app.types.config.mediaserver_config import MediaServerConfig
 
