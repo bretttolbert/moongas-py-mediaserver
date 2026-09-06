@@ -1,9 +1,10 @@
 # moongas-py-mediaserver
-Moongas Flask web application server for browsing medialibrary files, with advanced search filtering
+
+Flask web application server for browsing medialibrary files, with advanced search filtering. A component of the Moongas ecosystem of media library software.
 
 A minimalist Flask web application for browsing and playing music files
 
-Uses my other project [mediascan](https://github.com/bretttolbert/mediascan) for scanning music library files. Currently this must be performed manually (both for initial music library scan and to re-scan music library)
+Uses related projects [moongas-go-mediascan](https://github.com/bretttolbert/moongas-go-mediascan) and [moongas-py-mediascan](https://github.com/bretttolbert/moongas-py-mediascan) for scanning music library files to an sqlite database and then loading the database, respectively.
 
 ## [mediaserver Live Demo (aka _Brettify_)](https://bretttolbert.com/mediaserver)
 
@@ -48,16 +49,16 @@ Uses my other project [mediascan](https://github.com/bretttolbert/mediascan) for
 
 - Doesn't work with some `.m4a` files
     - Error: html5 audio element can't decode
-- Requires that your music library (or libraries) be scanned with [mediascan](https://github.com/bretttolbert/mediascan)
-    - `mediascan` scans your music library (or libraries) and outputs the [mediascan.db](https://github.com/bretttolbert/mediascan/blob/main/out/mediascan.db) file
+- Requires that your music library be scanned with [moongas-go-mediascan](https://github.com/bretttolbert/moongas-go-mediascan)
+    - `moongas-go-mediascan/cmd/scantodb` scans your music library and outputs a `mediascan.db` file
     - This must be repeated to update the music library (e.g. add new files)
-    - Alternatively you can use my [mediascan.db](https://github.com/bretttolbert/mediascan/blob/main/out/mediascan.db) file, in _YouTube-only_ mode (album cover artwork not included)
     - Album art may be extracted (and converted to .webp) using the mediascan copy covers script
     - I cannot share my music files, of course, as they are copyrighted, but I can share my mediascan database with over 20,000+ tracks, allowing you to browse my extensive and painstakingly organized music library (with accurate tags, genre and year) and _play_ any track by opening a YouTube search for it. 
-- Requires that music files be organized in the way that `mediascan` expects i.e. artist folders containing album folders with `cover.jpg` files
-    - You can verify this by testing your music library with [mediatest](https://github.com/bretttolbert/mediatest)
-- Requires that music filenames do not contain prohibited characters such as `+`
-    - You can verify this by testing your music library with [mediatest](https://github.com/bretttolbert/mediatest)
+- Requires that music library be organized with the directory and file structure that Moongas expects
+    - For example:
+        - Artist folders containing album folders with `cover.jpg` (or `cover.webp`) files
+        - Music filenames do not contain prohibited characters such as `+`
+    - You can enforce these requirements by testing your music library with [moongas-py-mediatest](https://github.com/bretttolbert/moongas-py-mediatest)
 
 ## Coming soon
 
@@ -68,53 +69,45 @@ Uses my other project [mediascan](https://github.com/bretttolbert/mediascan) for
 
 ## Dependencies
 
-- [mediascan](https://github.com/bretttolbert/mediascan) A simple and fast Go (golang) command-line utility to recursively scan a directory for media files, extract metadata (including ID3v2 tags from both MP3 and M4A files), and save the output in an sqlite3 database e.g. [mediascan.db](https://github.com/bretttolbert/mediascan/blob/main/out/mediascan.db), and a Python library with data classes for working with the database and/or yaml files output by `mediascan.go`.
-- [Flask-JSGlue](https://github.com/bretttolbert/Flask-JSGlue) This project depends on my fork of `Flask-JSGlue`, and it has not been published to pypi, so you'll have to clone the repo and install it from source (see below).
-
+- [moongas-go-mediascan](https://github.com/bretttolbert/moongas-go-mediascan) A simple and fast Go (golang) command-line utility to recursively scan a directory for media files, extract metadata (including ID3v2 tags from both MP3 and M4A files), and save the output in an sqlite3 database e.g. [mediascan.db](https://github.com/bretttolbert/mediascan/blob/main/out/mediascan.db)
+- [moongas-py-mediascan] a Python library with data classes for working with the database output by `mediascan.go`
+- [Flask-JSGlue](https://github.com/bretttolbert/Flask-JSGlue) This project depends on my fork of `Flask-JSGlue`
 
 ## Installation
 
-
-#### Install bretttolbert/Flask-JSGlue from GitHub source 
-- Clone the repo and install the `Flask-JSGlue` python package
+### Install bretttolbert/Flask-JSGlue from GitHub
+- Install my fork of the `Flask-JSGlue` python package
 ```bash
-cd ~/Git
-git clone git@github.com:bretttolbert/Flask-JSGlue.git
-cd Flask-JSGlue
-python -m pip install .
+pip install git+https://github.com/bretttolbert/Flask-JSGlue.git
 ```
 
-#### Install bretttolbert/mediascan from GitHub source 
-- Clone the repo and install the `mediascan` python package
+### Install bretttolbert/moongas-py-mediascan from GitHub source 
+- Install the Moongas `mediascan` python package
 ```bash
-cd ~/Git
-git clone git@github.com:bretttolbert/mediascan.git
-cd mediascan
-python -m pip install .
+pip install git+https://github.com/bretttolbert/moongas-py-mediascan.git
 ```
-- Modify the mediascan `conf.yaml` values (`mediadirs` etc.) as needed
-- Run mediascan.go (requires [go](https://go.dev/doc/install))
+- Modify the mediascan config (`mediascan-config.yaml`) values (`mediadirs` etc.) as needed
+- Run the `scantodb` command (requires [go](https://go.dev/doc/install))
 ```bash
-cd ~/Git/mediascan
-go run cmd/scantodb/main.go conf/conf.yaml out/mediascan.db
+cd moongas-go-mediascan
+go run cmd/scantodb/main.go mediascan-config.yaml ../mediascan.db
 ```
 
-#### Install bretttolbert/mediaserver from GitHub source 
+### Install bretttolbert/moongas-py-mediaserver from GitHub source 
 - Clone the repo
 ```bash
-cd ~/Git
-git clone git@github.com:bretttolbert/mediaserver.git
-cd mediaserver
+git clone git@github.com:bretttolbert/moongas-py-mediaserver.git
+cd moongas-py-mediaserver
 python -m pip install -r requirements.txt
 ```
 - Configure `mediaPath`, etc. in the [`mediaserver-config.yaml`](./mediaserver-config.yaml)
 - Run mediaserver
 ```bash
-cd ~/Git/mediaserver
+cd moongas-py-mediaserver
 python run.py mediaserver-config.yaml
 ```
 
-#### Automatically start and run as a SystemD service
+### Automatically start and run as a SystemD service
 
 - Customize the .service file [`mediaserver.service`](mediaserver.service) as required
     - Create a compatible Python virtual environment with the necessary dependencies
@@ -127,17 +120,17 @@ python run.py mediaserver-config.yaml
     3. `cd /etc/systemd/system`
     4. `chmod 644 mediaserver.service`
     5. `ln -s mediaserver.service ./multi-user.target.wants/mediaserver.service`
-- Use the systemctl daemon-reload command to force systemd to load the mediaserver.service file
+- Use the `systemctl daemon-reload` command to force systemd to load the `mediaserver.service` file
     1. `systemctl daemon-reload`
-- Start the mediaservice service and use journalctl to verify that it is running
+- Start the `mediaserver` service and use journalctl to verify that it is running
     1. `systemctl start mediaserver.service`
     2. `systemctl status mediaserver`
 
 Once you have it set up to run as a service, re-scanning your library is as easy as this:
-TODO: Update below to update mediascan database
+
 ```bash
-cd ~/Git/mediascan
-go run mediascan/src/mediascan.go conf/conf.yaml out/files.yaml
+cd moongas-go-mediascan
+go run cmd/scantodb/main.go mediascan-conf.yaml ../mediascan.db
 sudo systemctl restart mediaserver.service
 journalctl -fu mediaserver.service
 ```
