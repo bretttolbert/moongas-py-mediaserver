@@ -115,7 +115,6 @@ python run.py mediaserver-config.yaml
     - Create a compatible Python virtual environment with the necessary dependencies
     - Active it and install mediaserver `python -m pip install .`
     - Update the service file to point to your virtual environment
-    - Update the username and group name from `brett` to the user and group name you want to use
 - Copy the .service file into the systemd system folder to install it as a systemd service
     1. `sudo bash`
     2. `cp mediaserver.service /etc/systemd/system/`
