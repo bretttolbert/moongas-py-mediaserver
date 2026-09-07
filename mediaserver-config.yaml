@@ -11,7 +11,7 @@ flaskConfig:
   debug: true
   useDebugger: false
   useReloader: false
-  rootPath: /home/brett/Git/bretttolbert/moongas/moongas-py-mediaserver/app
+  rootPath: /var/www/moongas/moongas-py-mediaserver/app
   staticUrlPath: /mediaserver/static
   urlPrefix: /mediaserver
 playbackMethods:

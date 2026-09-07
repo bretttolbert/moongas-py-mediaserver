@@ -111,28 +111,100 @@ python run.py mediaserver-config.yaml
 
 ### Automatically start and run as a SystemD service
 
-- Customize the .service file [`mediaserver.service`](mediaserver.service) as required
-    - Create a compatible Python virtual environment with the necessary dependencies
-    - Active it and install mediaserver `python -m pip install .`
-    - Update the service file to point to your virtual environment
-- Copy the .service file into the systemd system folder to install it as a systemd service
-    1. `sudo bash`
-    2. `cp mediaserver.service /etc/systemd/system/`
-    3. `cd /etc/systemd/system`
-    4. `chmod 644 mediaserver.service`
-    5. `ln -s mediaserver.service ./multi-user.target.wants/mediaserver.service`
-- Use the `systemctl daemon-reload` command to force systemd to load the `mediaserver.service` file
-    1. `systemctl daemon-reload`
-- Start the `mediaserver` service and use journalctl to verify that it is running
-    1. `systemctl start mediaserver.service`
-    2. `systemctl status mediaserver`
+- Customize the .service file [`mediaserver.service`](./mediaserver.service) as required
+- Create a compatible Python virtual environment with the necessary dependencies
+- Active it and install mediaserver
+- Update the service file to point to your virtual environment
+- Copy the `mediaserver.service` file into the systemd system folder to install it as a systemd service
+```bash
+sudo cp mediaserver.service /etc/systemd/system/
+cd /etc/systemd/system
+sudo chmod 644 mediaserver.service
+```
+- Enable the service with `systemctl enable`: 
+```bash
+$ sudo systemctl enable mediaserver.service
+Created symlink /etc/systemd/system/multi-user.target.wants/mediaserver.service → /etc/systemd/system/mediaserver.service.
+``
+- Start the `mediaserver` service
+```bash
+systemctl start mediaserver.service
+```
+- Use `systemctl status` to verify that mediaserver is running
+```bash
+$ systemctl status mediaserver
+● mediaserver.service - mediaserver
+     Loaded: loaded (/etc/systemd/system/mediaserver.service; enabled; preset: enabled)
+     Active: active (running) since Mon 2026-09-07 10:25:00 CDT; 2s ago
+   Main PID: 24056 (python)
+      Tasks: 8 (limit: 38397)
+     Memory: 181.9M (peak: 182.1M)
+        CPU: 1.812s
+     CGroup: /system.slice/mediaserver.service
+             └─24056 /home/brett/Git/bretttolbert/moongas/env/bin/python run.py ../mediaserver-config.yaml
 
-Once you have it set up to run as a service, re-scanning your library is as easy as this:
-
+Sep 07 10:25:00 pentatonic systemd[1]: Started mediaserver.service - mediaserver.
+Sep 07 10:25:02 pentatonic python[24056]: Loading configuration from file ../mediaserver-config.yaml
+Sep 07 10:25:02 pentatonic python[24056]:  * Serving Flask app 'app'
+Sep 07 10:25:02 pentatonic python[24056]:  * Debug mode: on
+Sep 07 10:25:02 pentatonic python[24056]: WARNING: This is a development server. Do not use it in a production deployment. Use a produc>
+Sep 07 10:25:02 pentatonic python[24056]:  * Running on all addresses (0.0.0.0)
+Sep 07 10:25:02 pentatonic python[24056]:  * Running on http://127.0.0.1:5000
+Sep 07 10:25:02 pentatonic python[24056]:  * Running on http://192.168.0.85:5000
+Sep 07 10:25:02 pentatonic python[24056]: Press CTRL+C to quit
+```
+- If you make changes to the `mediaserver.service` unit file, use the `systemctl daemon-reload` command to force systemd to reload it
+```bash
+systemctl daemon-reload
+systemctl restart mediaserver
+```
+- Once you have it set up to run as a service, re-scanning your library is as easy as this:
 ```bash
 cd moongas-go-mediascan
 go run cmd/scantodb/main.go mediascan-conf.yaml ../mediascan.db
-sudo systemctl restart mediaserver.service
-journalctl -fu mediaserver.service
+sudo systemctl restart mediaserver
+journalctl -b -f -u mediaserver
 ```
-- Use `-fu` to follow the log so you can watch the server startup.
+- Use `-u` to specify the unit by name (`mediaserver`)
+- Use `-f` to follow the log so you can watch the server startup
+- Use `-b` to only show output since last boot (avoids showing old output)
+
+### Recommended directory structure for moongas
+
+Recommendations:
+- Create a `moongas` root directory and then clone the various components (such as `moongas-py-mediaserver`) inside it
+- Put the active config files (`mediaserver-config.yaml`, `mediascan-config.yaml`) in this root directory. 
+- Don't use the subproject default config files _in-place_, copy them to `moongas` root dir
+- Run commands such that output files (i.e. `mediascan.db`) reside in `moongas` root directory
+
+```bash
+brett@pentatonic:~/Git/bretttolbert/moongas$ tree -L 1
+.
+├── env -> env-py314
+├── env-py314
+├── Flask-JSGlue
+├── mediascan-artists.yaml
+├── mediascan-config.yaml
+├── mediascan.db
+├── mediascan-files.yaml
+├── mediaserver-config.yaml
+├── moongas-go-mediascan
+├── moongas-java-mediaserver
+├── moongas-py-mediascan
+├── moongas-py-mediaserver
+├── moongas-py-mediatest
+├── rename-album-files -> moongas-py-mediascan/scripts/rename_album_files.py
+├── restart-local-mediaserver -> moongas-py-mediaserver/dev/scripts/restart_local_mediaserver.sh
+├── restart-remote-mediaserver -> moongas-py-mediaserver/dev/scripts/restart_remote_mediaserver.sh
+├── run-mediascan-scanartistsyaml -> moongas-py-mediaserver/dev/scripts/run_mediascan_scanartistsyaml.sh
+├── run-mediascan-scanfilesyaml -> moongas-py-mediaserver/dev/scripts/run_mediascan_scanfilesyaml.sh
+├── run-mediascan-scantodb -> moongas-py-mediaserver/dev/scripts/run_mediascan_scantodb.sh
+├── run-mediatest -> moongas-py-mediaserver/dev/scripts/run_mediatest.sh
+├── update-covers -> moongas-py-mediaserver/dev/scripts/update_covers.sh
+├── update-everything -> moongas-py-mediaserver/dev/scripts/update_everything.sh
+├── upload-covers -> moongas-py-mediaserver/dev/scripts/upload_covers.sh
+├── upload-mediascandb -> moongas-py-mediaserver/dev/scripts/upload_mediascandb.sh
+├── upload-moongas-py-mediascan -> moongas-py-mediaserver/dev/scripts/upload_moongas-py-mediascan.sh
+└── upload-moongas-py-mediaserver -> moongas-py-mediaserver/dev/scripts/upload_moongas-py-mediaserver.sh
+
+```
