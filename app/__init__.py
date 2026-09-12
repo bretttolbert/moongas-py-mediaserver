@@ -57,7 +57,7 @@ def register_blueprint(app: Flask, config: MediaServerConfig, url_prefix: Option
         app.jinja_env.globals["URL_PREFIX"] = url_prefix
 
 
-def create_app(config: MediaServerConfig):
+def create_app(config: MediaServerConfig) -> Flask:
     root_path = config.flask_config.root_path
     url_prefix = config.flask_config.url_prefix
     static_url_path = config.flask_config.static_url_path

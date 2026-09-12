@@ -100,13 +100,13 @@ go run cmd/scantodb/main.go mediascan-config.yml ../mediascan.db
 ```bash
 git clone git@github.com:bretttolbert/moongas-py-mediaserver.git
 cd moongas-py-mediaserver
-python -m pip install -r requirements.txt
+python -m pip install .
 ```
 - Configure `mediaPath`, etc. in the [`mediaserver-config.yml`](./mediaserver-config.yml)
 - Run mediaserver
 ```bash
 cd moongas-py-mediaserver
-python run.py mediaserver-config.yml
+mediaserver mediaserver-config.yml
 ```
 
 ### Automatically start and run as a SystemD service
