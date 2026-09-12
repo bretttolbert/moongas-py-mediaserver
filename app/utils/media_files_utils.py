@@ -285,7 +285,7 @@ def get_artist_counts(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, ar
 
     files_filtered = filter_files(app, files, args)
     for f in files_filtered.itertuples():
-        name = str(f.albumartist)  # alternatively could use f.name (artist name from artist.yaml data)
+        name = str(f.albumartist)  # alternatively could use f.name (artist name from artist.yml data)
         if name in ret:
             ret[name] += 1
         else:
@@ -491,8 +491,8 @@ def get_artists(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, args: Ar
             ret.add(str(f.artist))
         return sorted(ret)
     else:
-        # New behavior: get artists from artists db table (derived from artist.yaml files)
-        # (faster but depends on presence of artist.yaml files)
+        # New behavior: get artists from artists db table (derived from artist.yml files)
+        # (faster but depends on presence of artist.yml files)
         ret: Set[str] = set()
         artists_filtered = filter_artists(app, artists, args)
         for a in artists_filtered.itertuples(name="artist", index=False):

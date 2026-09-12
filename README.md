@@ -88,11 +88,11 @@ pip install git+https://github.com/bretttolbert/Flask-JSGlue.git
 ```bash
 pip install git+https://github.com/bretttolbert/moongas-py-mediascan.git
 ```
-- Modify the mediascan config (`mediascan-config.yaml`) values (`mediadirs` etc.) as needed
+- Modify the mediascan config (`mediascan-config.yml`) values (`mediadirs` etc.) as needed
 - Run the `scantodb` command (requires [go](https://go.dev/doc/install))
 ```bash
 cd moongas-go-mediascan
-go run cmd/scantodb/main.go mediascan-config.yaml ../mediascan.db
+go run cmd/scantodb/main.go mediascan-config.yml ../mediascan.db
 ```
 
 ### Install bretttolbert/moongas-py-mediaserver from GitHub source 
@@ -102,11 +102,11 @@ git clone git@github.com:bretttolbert/moongas-py-mediaserver.git
 cd moongas-py-mediaserver
 python -m pip install -r requirements.txt
 ```
-- Configure `mediaPath`, etc. in the [`mediaserver-config.yaml`](./mediaserver-config.yaml)
+- Configure `mediaPath`, etc. in the [`mediaserver-config.yml`](./mediaserver-config.yml)
 - Run mediaserver
 ```bash
 cd moongas-py-mediaserver
-python run.py mediaserver-config.yaml
+python run.py mediaserver-config.yml
 ```
 
 ### Automatically start and run as a SystemD service
@@ -141,10 +141,10 @@ $ systemctl status mediaserver
      Memory: 181.9M (peak: 182.1M)
         CPU: 1.812s
      CGroup: /system.slice/mediaserver.service
-             └─24056 /home/brett/Git/bretttolbert/moongas/env/bin/python run.py ../mediaserver-config.yaml
+             └─24056 /home/brett/Git/bretttolbert/moongas/env/bin/python run.py ../mediaserver-config.yml
 
 Sep 07 10:25:00 pentatonic systemd[1]: Started mediaserver.service - mediaserver.
-Sep 07 10:25:02 pentatonic python[24056]: Loading configuration from file ../mediaserver-config.yaml
+Sep 07 10:25:02 pentatonic python[24056]: Loading configuration from file ../mediaserver-config.yml
 Sep 07 10:25:02 pentatonic python[24056]:  * Serving Flask app 'app'
 Sep 07 10:25:02 pentatonic python[24056]:  * Debug mode: on
 Sep 07 10:25:02 pentatonic python[24056]: WARNING: This is a development server. Do not use it in a production deployment. Use a produc>
@@ -161,7 +161,7 @@ systemctl restart mediaserver
 - Once you have it set up to run as a service, re-scanning your library is as easy as this:
 ```bash
 cd moongas-go-mediascan
-go run cmd/scantodb/main.go mediascan-conf.yaml ../mediascan.db
+go run cmd/scantodb/main.go mediascan-conf.yml ../mediascan.db
 sudo systemctl restart mediaserver
 journalctl -b -f -u mediaserver
 ```
@@ -173,7 +173,7 @@ journalctl -b -f -u mediaserver
 
 Recommendations:
 - Create a `moongas` root directory and then clone the various components (such as `moongas-py-mediaserver`) inside it
-- Put the active config files (`mediaserver-config.yaml`, `mediascan-config.yaml`) in this root directory. 
+- Put the active config files (`mediaserver-config.yml`, `mediascan-config.yml`) in this root directory. 
 - Don't use the subproject default config files _in-place_, copy them to `moongas` root dir
 - Run commands such that output files (i.e. `mediascan.db`) reside in `moongas` root directory
 
@@ -183,11 +183,11 @@ brett@pentatonic:~/Git/bretttolbert/moongas$ tree -L 1
 ├── env -> env-py314
 ├── env-py314
 ├── Flask-JSGlue
-├── mediascan-artists.yaml
-├── mediascan-config.yaml
+├── mediascan-artists.yml
+├── mediascan-config.yml
 ├── mediascan.db
-├── mediascan-files.yaml
-├── mediaserver-config.yaml
+├── mediascan-files.yml
+├── mediaserver-config.yml
 ├── moongas-go-mediascan
 ├── moongas-java-mediaserver
 ├── moongas-py-mediascan

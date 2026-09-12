@@ -17,7 +17,7 @@ set -euo pipefail
 #   -d, --dst-path DST_PATH
 #                         Destination directory path.
 #   -i, --include-filenames INCLUDE_FILENAMES [INCLUDE_FILENAMES ...]
-#                         Filename patterns to include (e.g., cover.jpg artist.yaml).
+#                         Filename patterns to include (e.g., cover.jpg artist.yml).
 #   -e, --exclude-keywords [EXCLUDE_KEYWORDS ...]
 #                         Keywords to exclude from file paths.
 #   --dry-run             Perform a trial run without making actual file changes.

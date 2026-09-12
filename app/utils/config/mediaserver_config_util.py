@@ -9,7 +9,7 @@ class MediaServerConfigUtil(BaseConfigUtil[MediaServerConfig]):
     Utility class for loading mediaserver configuration from YAML config file
     """
 
-    yaml_filename = "mediaserver-config.yaml"
+    yaml_filename = "mediaserver-config.yml"
     _yaml_resource_path = None
 
     def __init__(self) -> None:

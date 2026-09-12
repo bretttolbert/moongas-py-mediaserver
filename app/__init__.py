@@ -71,8 +71,8 @@ def create_app(config: MediaServerConfig):
     """
     TODO: TBR
     
-    app.config["MEDIASCAN_FILES"] = load_files_yaml(str(Path(config.mediascan_yaml_path).joinpath("files.yaml")))
-    app.config["MEDIASCAN_ARTISTS"] = load_artists_yaml(str(Path(config.mediascan_yaml_path).joinpath("artists.yaml")))
+    app.config["MEDIASCAN_FILES"] = load_files_yaml(str(Path(config.mediascan_yaml_path).joinpath("files.yml")))
+    app.config["MEDIASCAN_ARTISTS"] = load_artists_yaml(str(Path(config.mediascan_yaml_path).joinpath("artists.yml")))
 
     query = "SELECT * FROM your_table"
     db_conn = MediaScanDatabaseConnection(config.mediascan_database_file_path)

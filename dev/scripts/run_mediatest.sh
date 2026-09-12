@@ -1,4 +1,4 @@
 #!/bin/bash
 set -euo pipefail
-cd mediatest
-python -m pytest . -vv
+cd $MOONGAS_COLLECTION_ROOTDIR
+python -m mediatest mediatest-config.yml
