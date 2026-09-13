@@ -40,6 +40,12 @@ dependencies = [
 stats = [
   "scikit-learn>=1.7.2",
 ]
+tests = [
+  "pytest>=8.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
 
 [project.scripts]
 mediaserver = "run:main"
