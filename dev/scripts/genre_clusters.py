@@ -15,11 +15,11 @@ genre tag-checking or auto-tagging feature.
 """
 
 # List of genres
-genres = list(Genre)
+genres: list[str] = [str(genre) for genre in Genre]
 
 # Convert genres into numerical vectors using TF-IDF
 vectorizer = TfidfVectorizer(stop_words="english")
-X = vectorizer.fit_transform(genres)
+X = vectorizer.fit_transform(genres)  # pyright: ignore[reportUnknownMemberType]
 
 N_CLUSTERS = 16
 # Fit the KMeans clustering algorithm
@@ -30,7 +30,7 @@ kmeans.fit(X)
 clusters = kmeans.labels_
 
 # Create a dictionary to map genres to their clusters
-clustered_genres = {i: [] for i in range(N_CLUSTERS)}
+clustered_genres: dict[int, list[str]] = {i: [] for i in range(N_CLUSTERS)}
 for genre, cluster in zip(genres, clusters):
     clustered_genres[cluster].append(genre)
 

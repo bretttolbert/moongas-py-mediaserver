@@ -303,7 +303,7 @@ def artists_cloud() -> str:
 
 
 @bp.route("/api/track")
-def api_track():
+def api_track() -> dict[str, object]:
     global files
     config = get_config(current_app)
     args = get_request_args(request)

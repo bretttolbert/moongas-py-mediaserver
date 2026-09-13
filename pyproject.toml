@@ -36,6 +36,11 @@ dependencies = [
   "SQLAlchemy>=2.0.46",
 ]
 
+[project.optional-dependencies]
+stats = [
+  "scikit-learn>=1.7.2",
+]
+
 [project.scripts]
 mediaserver = "run:main"
 

@@ -17,7 +17,7 @@ class MediaServerConfigUtil(BaseConfigUtil[MediaServerConfig]):
 
     def _load_config_from_filestream(self, filestream: TextIO) -> MediaServerConfig:
         ret = MediaServerConfig()
-        data = MediaServerConfig.from_yaml(filestream)
+        data = MediaServerConfig.from_yaml(filestream) # type: ignore
         if isinstance(data, list):
             ret = data[0]
         else:

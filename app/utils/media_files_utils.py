@@ -1,12 +1,11 @@
 import json
 import os
 import random
-from typing import cast, Any, Dict, List, Optional, Set, Tuple
+from typing import cast, Any, Dict, List, Set, Tuple
 from urllib.parse import quote_plus  # type: ignore
 from pathlib import Path
 import pandas as pd
 import sys
-from flask.json import jsonify
 
 from flask import Flask, url_for
 
@@ -57,7 +56,7 @@ NameAndUrl = Tuple[str, str]
 ArtistGeoCounts = Dict[NameAndUrl, int]
 
 
-def row_to_mediafile(row) -> MediaFile:
+def row_to_mediafile(row: Any) -> MediaFile:
     mf = MediaFile(
         path=str(row.path),
         size=0,
@@ -112,7 +111,7 @@ def filter_files(app: Flask, files: pd.DataFrame, args: ArgsDict) -> pd.DataFram
     Note: This is now meant to be used with joined dataframe containing both file and artist data
     """
     app.logger.info("filter_files args=%s", args_dict_to_str(args))
-    results = []
+    results: List[Any] = []
     for row in files.itertuples():
         # ArgTypeScalarInt:
         arg_type = ArgTypes.Scalar.Int.MinYear
@@ -175,15 +174,13 @@ def filter_files(app: Flask, files: pd.DataFrame, args: ArgsDict) -> pd.DataFram
                     skip = True
                     break
         if not skip:
-            # app.logger.info("appending file %s", f)
-            # app.logger.info("filter_files args=%s", args_dict_to_str(args))
             results.append(row)
     return pd.DataFrame(results)
 
 
 def filter_artists(app: Flask, artists: pd.DataFrame, args: ArgsDict) -> pd.DataFrame:
     app.logger.info("filter_artists args=%s", args_dict_to_str(args))
-    results = []
+    results: List[Any] = []
     for row in artists.itertuples():
         # ArgTypeListStr:
         skip = False
@@ -308,13 +305,15 @@ def get_artist_counts(app: Flask, files: pd.DataFrame, artists: pd.DataFrame, ar
     return ret
 
 
-def get_static_json_data(app: Flask, filename: str):
+def get_static_json_data(app: Flask, filename: str) -> Dict[str, Any]:
     if app.static_folder is None:
         sys.exit(1)
     full_path = os.path.join(app.static_folder, "json_data", filename)
     try:
         with open(full_path, "r") as json_file:
-            return json.load(json_file)
+            data = json.load(json_file)
+            if isinstance(data, dict):
+                return cast(Dict[str, Any], data)
     except FileNotFoundError:
         app.logger.error("Data file not found")
     except json.JSONDecodeError:
@@ -349,7 +348,7 @@ class ArtistQueryCountInfo:
     not the URL parameter name(s) and value(s) (codes).
     """
 
-    def __init__(self, name, value, url, count):
+    def __init__(self, name: str, value: str, url: str, count: int) -> None:
         self.name = name
         self.value = value
         self.url = url
@@ -446,7 +445,7 @@ def get_artist_city_counts(app: Flask, artists: pd.DataFrame, args: ArgsDict) ->
 
     counts: ArtistGeoCounts = {}
     for artist in artists.itertuples():
-        city_qualifiers = []
+        city_qualifiers: List[str] = []
         cc = str(artist.countrycode)
         rc = str(artist.regioncode)
         if rc in region_code_name_map:

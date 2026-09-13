@@ -12,7 +12,7 @@ class AlbumInfo:
         self.year = year
         self.cover_path = cover_path
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, AlbumInfo):
             return NotImplemented
         return (

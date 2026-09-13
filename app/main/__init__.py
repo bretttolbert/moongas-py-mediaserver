@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint("main", __name__)
 
-from app.main import routes  # Import routes to associate them with the blueprint
+from app.main import routes # type: ignore
